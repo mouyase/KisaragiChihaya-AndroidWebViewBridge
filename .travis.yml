@@ -1,5 +1,19 @@
 language: android
 
+android:
+  components:
+    - tools
+    - build-tools-29.0.0
+    - android-29
+    - extra-android-m2repository
+
+before_install:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew assembleRelease
+
+
 branches:
   only:
     - nightly
