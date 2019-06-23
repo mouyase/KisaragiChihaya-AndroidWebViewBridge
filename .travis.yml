@@ -6,6 +6,9 @@ android:
     - build-tools-29.0.0
     - android-29
     - extra-android-m2repository
+  licenses:
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 before_install:
   - chmod +x gradlew
@@ -14,7 +17,10 @@ script:
   - ./gradlew assembleRelease
 
 after_script:
-  - ls -ll
+  - cd app
+  - cd build
+  - cd outputs
+  - cd apk
   - cd release
   - ls -ll
 
