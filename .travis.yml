@@ -53,8 +53,6 @@ deploy:
   api_key: "${GH_TOKEN}"
   file: "./app/build/outputs/apk/debug/app-debug.apk"
   skip_cleanup: true
-  on:
-    tags: true
 
 branches:
   only:
