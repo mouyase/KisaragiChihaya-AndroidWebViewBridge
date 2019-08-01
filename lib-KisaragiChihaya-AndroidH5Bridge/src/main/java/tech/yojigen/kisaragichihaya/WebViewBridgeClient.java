@@ -17,11 +17,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,7 +67,6 @@ public class WebViewBridgeClient extends WebViewClient {
 
     @Override
     public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-//                System.out.println("onReceivedHttpAuthRequest");
         super.onReceivedHttpAuthRequest(view, handler, host, realm);
     }
 
@@ -121,7 +116,7 @@ public class WebViewBridgeClient extends WebViewClient {
         String contentType = "application/x-javascript";
         Matcher matcher = mBridgePattern.matcher(request.getUrl().toString());
         if (matcher.find()) {
-            return new WebResourceResponse(contentType, null, string2InputSteam(this.mWebViewBridge.getJavaScript()));
+            return new WebResourceResponse(contentType, null, new ByteArrayInputStream(this.mWebViewBridge.getJavaScript().getBytes()));
         }
         return super.shouldInterceptRequest(view, request);
     }
@@ -134,23 +129,5 @@ public class WebViewBridgeClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-    }
-
-    private String inputSteam2String(InputStream inputStream) {
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        try {
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return stringBuilder.toString();
-    }
-
-    private InputStream string2InputSteam(String string) {
-        return new ByteArrayInputStream(string.getBytes());
     }
 }

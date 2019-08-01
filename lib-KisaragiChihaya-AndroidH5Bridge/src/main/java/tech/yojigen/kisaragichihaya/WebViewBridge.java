@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class WebViewBridge {
     private WebView mWebView;
-    private WebViewBridgeClient mWebViewBridgeClient;
     private Activity mActivity;
     private String javaScript;
     private Map<String, DataListener> mDataListenerMap = new HashMap<>();
@@ -37,7 +36,11 @@ public class WebViewBridge {
         this.mActivity = (Activity) this.mWebView.getContext();
         this.mWebView.getSettings().setJavaScriptEnabled(true);
         this.mWebView.addJavascriptInterface(this, "bridge");
-        this.mWebView.setWebViewClient(this.mWebViewBridgeClient);
+        this.mWebView.setWebViewClient(new WebViewBridgeClient(this));
+    }
+
+    public void setWebViewClient(WebViewBridgeClient webViewBridgeClient) {
+        this.mWebView.setWebViewClient(webViewBridgeClient);
     }
 
     private void createScript() {
@@ -46,7 +49,7 @@ public class WebViewBridge {
         stringBuilder.append("var Chihaya=Bridge;");
         stringBuilder.append("var KisaragiChihaya=Bridge;");
         stringBuilder.append("Bridge['functions']={};");
-        stringBuilder.append("Bridge['runFromAndroid']=function(name,value){var func=Bridge.functions[name];if(value){func(JSON.parse(value);)}else{func();}};");
+        stringBuilder.append("Bridge['runFromAndroid']=function(name,value){var func=Bridge.functions[name];if(value){func(JSON.parse(value));}else{func();}};");
         for (String key : mNoDataListenerMap.keySet()) {
             stringBuilder.append(String.format(TEMPLATE_FUNCTION, key, key, key));
         }

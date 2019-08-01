@@ -13,7 +13,6 @@ import tech.yojigen.kisaragichihaya.Chihaya;
 import tech.yojigen.kisaragichihaya.WebViewBridgeClient;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
