@@ -83,3 +83,6 @@ lint/reports/
 
 #macOS
 .DS_Store
+
+#aar
+aar
