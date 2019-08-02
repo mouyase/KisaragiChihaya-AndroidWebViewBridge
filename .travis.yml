@@ -1,5 +1,5 @@
 language: android
-dist: trusty
+dist: bionic
 
 jdk:
   - openjdk8
@@ -15,7 +15,6 @@ install:
   - chmod +x gradlew
 
 script:
-  - ls -la
   - ./gradlew uploadArchives
 
 after_success:
